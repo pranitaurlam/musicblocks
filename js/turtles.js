@@ -875,10 +875,10 @@ Turtles.TurtlesView = class {
             container.setAttribute(
                 "style",
                 "position: absolute; right:" +
-                    (document.body.clientWidth - x) +
-                    "px;  top: " +
-                    y +
-                    "px;"
+                (document.body.clientWidth - x) +
+                "px;  top: " +
+                y +
+                "px;"
             );
             docById("buttoncontainerTOP").appendChild(container);
             return container;
@@ -1161,6 +1161,15 @@ Turtles.TurtlesView = class {
                     });
                 });
             this._locked = false;
+
+            // After re-creating buttons (e.g. on theme switch or canvas redraw),
+            // restore their vertical offset if the aux toolbar is currently open.
+            if (
+                activity.toolbarHeight > 0 &&
+                typeof activity.changeTopButtonsPosition === "function"
+            ) {
+                activity.changeTopButtonsPosition(activity.toolbarHeight);
+            }
         };
 
         /**
